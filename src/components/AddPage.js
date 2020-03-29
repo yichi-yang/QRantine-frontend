@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Form,
-  Grid,
-  Header,
-  Image,
-  Segment,
-  Button,
-  Message,
-  Container
-} from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import { connect } from "react-redux";
 import axios from "axios";
 import "react-phone-input-2/lib/semantic-ui.css";
@@ -41,7 +32,14 @@ class AddPage extends React.Component {
 
   render() {
     if (!this.props.tokens) {
-      return <Redirect to="/login/" />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/login/",
+            state: { plus_code: this.props.plus_code }
+          }}
+        />
+      );
     }
     if (this.state.success) {
       return <Redirect to="/" />;

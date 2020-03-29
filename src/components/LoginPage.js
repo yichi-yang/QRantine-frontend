@@ -6,7 +6,7 @@ import {
   Image,
   Segment,
   Button,
-  Message
+  Container
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -79,55 +79,71 @@ class LoginPage extends React.Component {
 
   render() {
     if (this.state.success) {
+      if (this.props.location.state.plus_code) {
+        return (
+          <Redirect to={`/add/${this.props.location.state.plus_code}/`} push />
+        );
+      }
       return <Redirect to="/" push />;
     }
     return (
-      <Grid
-        textAlign="center"
-        style={{ height: "100vh" }}
-        verticalAlign="middle"
-      >
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" color="teal" textAlign="center">
-            <Image src="/logo.png" /> Log-in to your account
-          </Header>
-          <Form size="large">
-            <Segment>
-              <Form.Field
-                control={PhoneInput}
-                country={"us"}
-                value={this.state.phone}
-                name="phone"
-                onChange={phone => this.setState({ phone })}
-                placeholder="phone number"
-                disabled={this.state.codeSent}
-              />
-              {this.state.codeSent && (
-                <Form.Input
-                  fluid
-                  icon="lock"
-                  iconPosition="left"
-                  placeholder="verification code"
-                  type="password"
-                  value={this.state.code}
-                  onChange={(e, { value }) => this.setState({ code: value })}
+      <Container>
+        <Grid
+          textAlign="center"
+          style={{ height: "100vh" }}
+          verticalAlign="middle"
+        >
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as="h1" color="teal" textAlign="center">
+              QRantine
+            </Header>
+            <Header
+              as="h2"
+              color="teal"
+              textAlign="center"
+              style={{ paddingBottom: "2em" }}
+            >
+              Stay safe during quarantine.
+            </Header>
+            <Form size="large">
+              <Segment textAlign="left">
+                <Form.Field
+                  control={PhoneInput}
+                  country={"us"}
+                  value={this.state.phone}
+                  name="phone"
+                  onChange={phone => this.setState({ phone })}
+                  placeholder="phone number"
+                  disabled={this.state.codeSent}
+                  label="sign in with phone number"
                 />
-              )}
+                {this.state.codeSent && (
+                  <Form.Input
+                    fluid
+                    icon="lock"
+                    iconPosition="left"
+                    placeholder="verification code"
+                    type="password"
+                    value={this.state.code}
+                    onChange={(e, { value }) => this.setState({ code: value })}
+                  />
+                )}
 
-              {this.state.codeSent && (
-                <Button color="teal" fluid size="large" onClick={this.login}>
-                  Login
-                </Button>
-              )}
-              {!this.state.codeSent && (
-                <Button color="teal" fluid size="large" onClick={this.verify}>
-                  Get Verification Code
-                </Button>
-              )}
-            </Segment>
-          </Form>
-        </Grid.Column>
-      </Grid>
+                {this.state.codeSent && (
+                  <Button color="teal" fluid size="large" onClick={this.login}>
+                    Login
+                  </Button>
+                )}
+                {!this.state.codeSent && (
+                  <Button color="teal" fluid size="large" onClick={this.verify}>
+                    Get Verification Code
+                  </Button>
+                )}
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
+      </Container>
     );
   }
 }
