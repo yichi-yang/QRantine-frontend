@@ -102,7 +102,7 @@ class FrontPage extends React.Component {
             this.state.records.map(record => {
               let color = null;
               let warningText = "No Statistics";
-              if (record.community_cases) {
+              if (record.community_cases !== null) {
                 if (record.community_cases >= 10) {
                   color = "red";
                   warningText = "High Risk";
