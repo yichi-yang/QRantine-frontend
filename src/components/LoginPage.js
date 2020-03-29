@@ -95,7 +95,7 @@ class LoginPage extends React.Component {
         >
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as="h1" color="teal" textAlign="center">
-              QRantine
+            <Image src='/logo192.png' size="big" /> QRantine
             </Header>
             <Header
               as="h2"
