@@ -1,14 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { allReducers } from "./reducers";
+import persistState from "redux-localstorage";
+import setupJwtRefresh from "./axiosJwtRefresh";
+
+const store = configureStore({
+  reducer: allReducers,
+  enhancers: [persistState(["user"])]
+});
+
+setupJwtRefresh(store);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </Provider>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

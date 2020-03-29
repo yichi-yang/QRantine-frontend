@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.react-tel-input input {
+  padding-left: 3em !important;
+}
